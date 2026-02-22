@@ -1,0 +1,56 @@
+kalo mau buat controller tambahin -r supaya langsung ada template nya
+model anggota bisa diganti sama model user.php dengan cara ditambahin relasi
+*Credits to razan the goat Laravel king 67
+
+
+
+download Laravel ui
+isi auth register
+buat migration
+buat seeder
+masukin seeder
+buat middleware
+daftar middleware
+masukin routes
+
+
+download Laravel ui
+setting folder migration untuk create_book_table, create_anggota_table, create_transaksi_table
+setting folder migration di file create_users_table.php buat komponen tabel users ('role')->default('siswa')
+buat seeder AdminSeeder tambahin data login buat admin
+- php artisan db:seed --class=AdminSeeder
+buat middleware AdminMiddleware 
+- if (auth()->check() && auth()->user()->role === 'admin') {
+            return $next($request); // Izinkan akses
+        }
+daftarin middleware nya di bootstrap app.php
+- $middleware->alias([
+            'admin' => App\Http\Middleware\AdminMiddleware::class,
+        ]);
+masukin middleware di routes:
+- Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\Admin\AdminController::class, 'index'])->	name('admin.dashboard');
+	});
+
+buat folder controller khusus Admin dan isi masing masing controller nya
+AdminControler -> return view('admin.controller')
+BookController,TransaksiController,AnggotaController -r (untuk CRUD)
+
+[Phase II BOOK CRUD]
+(strategi cek github)
+buat folder layouts dengan file app.blade.php. Isi app.blade nya
+buat folder admin di views. Buat file dashboard.blade.php
+buat folder books di dalam folder admin, isinya ada create,edit,index
+ke BookController, isi masing masing function nya
+masukin routes untuk create book
+- Route::resource('/books', BookController::class);
+
+[PHASE III ANGGOTA]
+sama aja kyk book lmao
+cmn lo harus ingetin, MVC nya harus bener dan sama. dan hati hati di routing view nya.
+
+[PHASE IV TRANSAKSI]
+
+ya yu know lah y
+
+*INI MASIH UNFINISHED. MASIH BELUM BISA BUAT USER SISWA.
